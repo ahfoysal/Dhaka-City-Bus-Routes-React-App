@@ -25,6 +25,7 @@ const Home = () => {
    
 
     const fetchData = async () => {
+      
       try {
         const querySnapshot = await getDocs(collection(db, 'buses '));
         const dataArray = querySnapshot.docs.map(doc => doc.data());
@@ -38,6 +39,7 @@ const Home = () => {
       }
     };
     const handleSubmit = (e) => {
+      setBuses(data)
       e.preventDefault(); 
       if(!from)return
       if(!to)return
