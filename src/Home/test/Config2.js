@@ -1414,7 +1414,7 @@ const jsonData = [];
 listItems.forEach(li => {
   const route = li.querySelector('div.card-body').textContent.trim();
   const BusNmae = li.querySelector('a.btn.btn-primary').textContent.trim();
-  const Routes = route.split('-').map(w => w.trim().replace(/\n       /g, ''));
+  const Routes = route.split('-').map(w => w.trim().replace(/\n       /g, '').replace(/Route: /g, ''));
   jsonData.push({ BusNmae, Routes });
 });
 
