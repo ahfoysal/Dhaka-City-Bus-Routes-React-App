@@ -149,7 +149,7 @@ const Home = () => {
 
       <Accordion  style={{ marginTop: "80px" }}>
       { buses.length < 1 && <p>No Buses Found</p> }
-      {!from ? buses?.map((bus,index)=> {
+      {!from && !to  ? buses?.map((bus,index)=> {
             return  <Accordion.Item key={index} eventKey={`${index}`}>
         <Accordion.Header>{bus.BusNmae}</Accordion.Header>
         <Accordion.Body>
