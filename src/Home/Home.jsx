@@ -20,17 +20,21 @@ const Home = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [suggestions2, setSuggestions2] = useState([]);
     
-  
+    const uniqueRoutes = [...new Set(data.flatMap(bus => bus.Routes))];
+
+   
+
     const fetchData = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'buses '));
         const dataArray = querySnapshot.docs.map(doc => doc.data());
         const uniqueRoutes = [...new Set(dataArray.flatMap(bus => bus.Routes))];
-        console.log(JSON.stringify(dataArray[0], dataArray[1]));
+     
         setLocations(uniqueRoutes)
         setBuses(dataArray)
       } catch (error) {
         console.log(error);
+         setLocations(uniqueRoutes)
       }
     };
     const handleSubmit = (e) => {
