@@ -15,13 +15,14 @@ const Home = () => {
   const [isVisible2, setIsVisible2] = useState(true);
     const [buses, setBuses] = useState(data)
     const [items, setItems] = useState([])
-    const [locations, setLocations] = useState('');
+ 
     const [from, setFrom] = useState('');
     const [to, setTo] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [suggestions2, setSuggestions2] = useState([]);
     
     const uniqueRoutes = [...new Set(data.flatMap(bus => bus.Routes))];
+    const [locations, setLocations] = useState(uniqueRoutes);
 
    
 
@@ -95,7 +96,7 @@ const Home = () => {
       setFrom(value);
   
       // Filter options based on the input value
-      const filteredOptions = locations.filter((option) =>
+      const filteredOptions = locations?.filter((option) =>
         option.toLowerCase().startsWith(value.toLowerCase())
       );
   
