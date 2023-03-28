@@ -14,6 +14,7 @@ const Home = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [isVisible2, setIsVisible2] = useState(true);
     const [buses, setBuses] = useState(data)
+    const [items, setItems] = useState([])
     const [locations, setLocations] = useState('');
     const [from, setFrom] = useState('');
     const [to, setTo] = useState('');
@@ -39,7 +40,7 @@ const Home = () => {
       }
     };
     const handleSubmit = (e) => {
-      setBuses(data)
+    
       e.preventDefault(); 
       if(!from)return
       if(!to)return
@@ -55,7 +56,7 @@ const Home = () => {
           });
         });
       });
-      setBuses(filteredRoutes)
+      setItems(filteredRoutes)
       console.log(filteredRoutes)
     };
     useEffect(() => {
@@ -146,8 +147,8 @@ const Home = () => {
 </Form>
 
       <Accordion  style={{ marginTop: "80px" }}>
-      {buses.length < 1 && <p>No Buses Found</p> }
-      {buses?.map((bus,index)=> {
+      { buses.length < 1 && <p>No Buses Found</p> }
+      {items.length < 0 ? buses?.map((bus,index)=> {
             return  <Accordion.Item key={index} eventKey={`${index}`}>
         <Accordion.Header>{bus.BusNmae}</Accordion.Header>
         <Accordion.Body>
@@ -155,7 +156,17 @@ const Home = () => {
       
         </Accordion.Body>
       </Accordion.Item>
-          })}
+          }) : 
+          items?.map((bus,index)=> {
+            return  <Accordion.Item key={index} eventKey={`${index}`}>
+        <Accordion.Header>{bus.BusNmae}</Accordion.Header>
+        <Accordion.Body>
+      <b>Route: </b> {bus.Routes?.map((route,index) => ` ${route},`)}
+      
+        </Accordion.Body>
+      </Accordion.Item>
+          })
+          }
     </Accordion>
 
            
