@@ -137,7 +137,7 @@ const Home = () => {
       )}
     </div>
     <div style={{ position: 'relative' }}>
-      <input value={to} onChange={handleInputChange2} type="text" style={{ marginRight: "20px" }} placeholder='to'/>
+      <input value={to} onChange={handleInputChange2} type="text" style={{ marginLeft: "20px" }} placeholder='to'/>
       {isVisible2 && (
      <Suggetion handleSelectSuggestion={handleSelectSuggestion2} suggestions={suggestions2}  divRef={divRef2} />
       )}
