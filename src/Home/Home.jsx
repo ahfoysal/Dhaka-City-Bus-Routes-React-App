@@ -1,45 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { collection, getDocs } from 'firebase/firestore';
+
 import Accordion from 'react-bootstrap/Accordion';
-import db from '../Firebase'
+
 import TextInput from 'react-autocomplete-input';
 import 'react-autocomplete-input/dist/bundle.css';
 import Suggetion from './Suggetion';
 import styled from 'styled-components';
-import data from './BusRout.json'
 
-const Home = () => {
+
+
+const Home = ({locations, buses}) => {
   const divRef = useRef(null);
   const divRef2 = useRef(null);
   const [isVisible, setIsVisible] = useState(true);
   const [isVisible2, setIsVisible2] = useState(true);
-    const [buses, setBuses] = useState(data)
-    const [items, setItems] = useState([])
- 
-    const [from, setFrom] = useState('');
-    const [to, setTo] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
-    const [suggestions2, setSuggestions2] = useState([]);
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions2, setSuggestions2] = useState([]);
+  const [items, setItems] = useState([])
     
-    const uniqueRoutes = [...new Set(data.flatMap(bus => bus.Routes))];
-    const [locations, setLocations] = useState(uniqueRoutes);
-
-   
-
-    const fetchData = async () => {
-      
-      try {
-        const querySnapshot = await getDocs(collection(db, 'buses '));
-        const dataArray = querySnapshot.docs.map(doc => doc.data());
-        const uniqueRoutes = [...new Set(dataArray.flatMap(bus => bus.Routes))];
-     
-        setLocations(uniqueRoutes)
-        setBuses(dataArray)
-      } catch (error) {
-        console.log(error);
-         setLocations(uniqueRoutes)
-      }
-    };
     const handleSubmit = (e) => {
     
       e.preventDefault(); 
@@ -49,9 +29,7 @@ const Home = () => {
  
       const filteredRoutes = buses.filter((route) => {
         return stopsToFind.every(stop => {
-          return route.Routes.some(routeStop => {
-          
-         
+          return route.Routes.some(routeStop => {   
            
              return routeStop.toLowerCase().includes(stop.toLowerCase());
           });
@@ -62,7 +40,7 @@ const Home = () => {
     };
     useEffect(() => {
       
-      fetchData()
+     
       function handleClickOutside(event) {
         if (divRef.current && !divRef.current.contains(event.target)) {
           setIsVisible(false);
@@ -126,11 +104,11 @@ const Home = () => {
 
 
   return (
-    <div className='container' style={{ marginTop: "80px" }}>
+    <div className='container' >
 
-
-<Form onSubmit={handleSubmit} style={{  }}>
-<div style={{ display: "flex" }}>
+<div className='mt-100'>
+<Form onSubmit={handleSubmit} >
+<div style={{ display: "flex" }} >
     <div style={{ position: 'relative' }}>
     <input   value={from} onChange={handleInputChange} type="text" style={{ marginRight: "10px" }} placeholder='from' />
     {isVisible && (
@@ -143,7 +121,7 @@ const Home = () => {
      <Suggetion handleSelectSuggestion={handleSelectSuggestion2} suggestions={suggestions2}  divRef={divRef2} />
       )}
       </div></div>
-      <Button  style={{ marginTop: "30px" }} className='btn' onSubmit={handleSubmit} type="submit">Search Bus</Button>
+      <ButtonDiv  style={{ marginTop: "30px" }} className='btn' onSubmit={handleSubmit} type="submit">Search Bus</ButtonDiv>
 
 </Form>
 
@@ -169,6 +147,8 @@ const Home = () => {
           })
           }
     </Accordion>
+</div>
+
 
            
       
@@ -183,7 +163,7 @@ align-items: center;
 display: flex;
 flex-direction: column;
 `;
-const Button = styled.button`
+const ButtonDiv = styled.button`
     border: 0;
     background-color: #fccd03;
     color: #1c3c6b;
